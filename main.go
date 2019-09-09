@@ -15,8 +15,8 @@ var (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "slack plugin"
-	app.Usage = "slack plugin"
+	app.Name = "teams plugin"
+	app.Usage = "teams plugin"
 	app.Action = run
 	app.Version = fmt.Sprintf("%s+%s", version, build)
 	app.Flags = []cli.Flag{
@@ -142,10 +142,15 @@ func run(c *cli.Context) error {
 		Summary: "Drone",
 		Sections: []Section{
 			Section{
+				ActivityImage: c.String("commit.author.avatar"),
 				Facts: []Fact{
 					Fact{
 						Name:  "Status:",
 						Value: c.String("build.status"),
+					},
+					Fact{
+						Name:  "Repository Name:",
+						Value: c.String("repo.name"),
 					},
 					Fact{
 						Name:  "Author:",
@@ -162,6 +167,10 @@ func run(c *cli.Context) error {
 					Fact{
 						Name:  "Commit:",
 						Value: c.String("commit.sha"),
+					},
+					Fact{
+						Name:  "Deployed To:",
+						Value: c.String("build.deployTo"),
 					},
 				},
 			},

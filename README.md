@@ -14,23 +14,41 @@ Drone plugin for sending MS teams notifications.
     when: { status: [ success, failure ] }
 ```
 
-## Available Drone Environment Variables
-| Environment Variables  | 
-| ------------- |
-| TEAMS_WEBHOOK |
-| DRONE_REPO_OWNER |
-| DRONE_REPO_NAME |
-| DRONE_COMMIT_SHA |
-| DRONE_COMMIT_BRANCH |
-| DRONE_COMMIT_AUTHOR |
-| DRONE_COMMIT_AUTHOR_EMAIL |
-| DRONE_COMMIT_AUTHOR_AVATAR |
-| DRONE_COMMIT_AUTHOR_NAME |
-| DRONE_BUILD_NUMBER |
-| DRONE_BUILD_STATUS |
-| DRONE_BUILD_LINK |
-| DRONE_TAG |
+## Build
 
-## MS Teams
-You can create new cards using the [link](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/cards/cards-reference#office-365-connector-card)
+Build the binary with the following commands:
 
+```
+go build
+```
+
+## Docker
+
+Build the Docker image with the following commands:
+
+```
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o drone-teams main.go plugin.go
+docker build --rm -t kuperiu/drone-teams .
+```
+
+## Usage
+
+Execute from the working directory:
+
+```
+docker run --rm \
+  -e TEAMS_WEBHOOK=https://hooks.slack.com/services/... \
+  -e DRONE_REPO_OWNER=octocat \
+  -e DRONE_REPO_NAME=hello-world \
+  -e DRONE_COMMIT_SHA=7fd1a60b01f91b314f59955a4e4d4e80d8edf11d \
+  -e DRONE_COMMIT_BRANCH=master \
+  -e DRONE_COMMIT_AUTHOR=octocat \
+  -e DRONE_COMMIT_AUTHOR_EMAIL=octocat@github.com \
+  -e DRONE_COMMIT_AUTHOR_AVATAR="https://avatars0.githubusercontent.com/u/583231?s=460&v=4" \
+  -e DRONE_COMMIT_AUTHOR_NAME="The Octocat" \
+  -e DRONE_BUILD_NUMBER=1 \
+  -e DRONE_BUILD_STATUS=success \
+  -e DRONE_BUILD_LINK=http://github.com/octocat/hello-world \
+  -e DRONE_TAG=1.0.0 \
+  kuperiu/drone-teams
+```

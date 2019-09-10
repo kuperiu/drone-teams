@@ -1,6 +1,6 @@
 # drone-teams
 
-Drone plugin for sending MS teams notifications.
+Drone plugin for sending Microsoft Teams notifications.
 
 ## Drone Configuration
 - Create a MS Teams incoming webhook

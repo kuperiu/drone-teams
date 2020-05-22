@@ -15,6 +15,12 @@ pipeline {
           }
         }
 
+        stage('print') {
+          steps {
+            echo 'ddd'
+          }
+        }
+
       }
     }
 

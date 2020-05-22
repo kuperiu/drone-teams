@@ -9,7 +9,7 @@ pipeline {
 
     stage('another') {
       steps {
-        input(message: 'Which version', id: 'version', submitterParameter: 'string')
+        input(message: 'Which version', id: 'version', submitterParameter: 'string', submitter: 'string')
       }
     }
 

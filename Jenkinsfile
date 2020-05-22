@@ -7,6 +7,12 @@ pipeline {
       }
     }
 
+    stage('another') {
+      steps {
+        input(message: 'Which version', id: 'version', submitterParameter: 'string')
+      }
+    }
+
   }
   environment {
     env = 'dev'

@@ -65,7 +65,8 @@ type (
 	}
 
 	Section struct {
-		Facts []Fact `json:"facts"`
+		Facts         []Fact `json:"facts"`
+		ActivityImage string
 	}
 
 	Fact struct {
@@ -74,11 +75,18 @@ type (
 	}
 )
 
-func (t Teams) exec(webhook string) {
+func (t Teams) exec(webhook string) error {
 
 	b := new(bytes.Buffer)
 	json.NewEncoder(b).Encode(t)
-	req, _ := http.NewRequest("POST", webhook, b)
-	res, _ := http.DefaultClient.Do(req)
+	req, err := http.NewRequest("POST", webhook, b)
+	if err != nil {
+		return err
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
 	defer res.Body.Close()
+	return nil
 }

@@ -196,6 +196,9 @@ func run(c *cli.Context) error {
 	}
 
 	webhook := c.String("webhook")
-	t.exec(webhook)
+	err := t.exec(webhook)
+	if err != nil {
+		return err
+	}
 	return nil
 }

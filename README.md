@@ -1,3 +1,7 @@
+[![image
+pulls](https://shields.beevelop.com/docker/pulls/kuperiu/drone-teams.svg)](https://hub.docker.com/r/kuperiu/drone-teams)
+
+
 # drone-teams
 
 Drone plugin for sending Microsoft Teams notifications.
@@ -7,11 +11,16 @@ Drone plugin for sending Microsoft Teams notifications.
 - Add the webhook to drone secrets
 - Add the following snippet at the end of your pipeline (Don't foregt to change the secret)
 ```yaml
-  notify:
-    image: kuperiu/drone-teams
-    webhook: 
-      from_secret: teams_webhook
-    when: { status: [ success, failure ] }
+  notify: 
+    image: "kuperiu/drone-teams"
+    secrets: 
+      - 
+        source: "teams_webhook"
+        target: "teams_webhook"
+    when: 
+      status: 
+        - "success"
+        - "failure"
 ```
 
 ## Build
@@ -37,7 +46,7 @@ Execute from the working directory:
 
 ```
 docker run --rm \
-  -e TEAMS_WEBHOOK=https://hooks.slack.com/services/... \
+  -e TEAMS_WEBHOOK=https://... \
   -e DRONE_REPO_OWNER=octocat \
   -e DRONE_REPO_NAME=hello-world \
   -e DRONE_COMMIT_SHA=7fd1a60b01f91b314f59955a4e4d4e80d8edf11d \

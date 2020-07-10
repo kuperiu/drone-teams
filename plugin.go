@@ -66,7 +66,7 @@ type (
 
 	Section struct {
 		Facts         []Fact `json:"facts"`
-		ActivityImage string
+		ActivityImage string `json:"activityImage"`
 	}
 
 	Fact struct {

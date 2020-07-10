@@ -105,6 +105,11 @@ func main() {
 			Usage:  "build link",
 			EnvVar: "DRONE_BUILD_LINK",
 		},
+		cli.StringFlag{
+			Name:   "commit.link",
+			Usage:  "commit link",
+			EnvVar: "CI_BUILD_LINK",
+		},
 		cli.Int64Flag{
 			Name:   "build.started",
 			Usage:  "build started",
@@ -183,6 +188,16 @@ func run(c *cli.Context) error {
 					Target{
 						OS:  "default",
 						URI: c.String("build.link"),
+					},
+				},
+			},
+			PotentialAction{
+				Name: "Open Commit",
+				Type: "OpenUri",
+				Targets: []Target{
+					Target{
+						OS:  "default",
+						URI: c.String("commit.link"),
 					},
 				},
 			},

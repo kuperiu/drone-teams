@@ -1,9 +1,10 @@
-FROM golang:1.12
-
-LABEL maintainer="Drone.IO Community <drone-dev@googlegroups.com>" \
-  org.label-schema.name="Drone Teams" \
-  org.label-schema.vendor="Drone.IO Community" \
-  org.label-schema.schema-version="1.0"
-
-ADD drone-teams /bin/
-ENTRYPOINT ["/bin/drone-teams"]
+FROM golang:1.15.0-alpine AS build
+ENV CGO_ENABLED="0"
+ENV GOOS="linux"
+ENV GOARCH="amd64"
+WORKDIR /src
+COPY . .
+RUN go build -o /out/app .
+FROM scratch AS bin
+COPY --from=build /out/app /bin/app
+ENTRYPOINT [ "/bin/app" ]

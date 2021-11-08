@@ -4,6 +4,7 @@ jobs:
   my-job:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v2
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
